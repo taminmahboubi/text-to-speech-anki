@@ -1,3 +1,4 @@
-hello there
-this is my example
-I'm using to practice
+Guten tag
+Wie geht es dir
+Mir geht es gut
+auf wiedersehen

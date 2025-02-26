@@ -1,6 +1,8 @@
 # text-to-speech-anki
 Convert text to speech files (from Google Translate) and put them into a Deck of Flashcards in the software Anki
 
+## Step 1: Opening and printing the contents of a .txt file.
+
 First we want to open a .txt file, printing each line:
 
 ```python
@@ -11,6 +13,8 @@ with open("example.txt, "r") as file:
 and create a `.txt` file with some lines in it.
 
 ---
+
+## Step 2: Translate words into another language
 
 Next, we want to change the language of the text, we'll use `gTTS`
 
@@ -86,3 +90,52 @@ for original,translated in translations.items():
     print(f"{original}  → {translated}")
 ```
 `.items()` is essential to iterate of *key-value* pairs! if you just used `translations` then you could only iterate and obtain the *keys*!
+
+Output Example:
+```
+Translations:
+hello there →  Hallo
+this is my example →  Dies ist mein Beispiel
+I'm using to practice →  Ich benutze das Üben
+```
+## Step 3: Generate Audio files from translations
+
+First, we want an output folder to store the audio files, in order to do this we need to do a few things:
+- `import os` provides a way for your Python programs to interact with the operating system, allowing us to create files,folders, etc.
+- create a variable for the output folder
+- Create the folder if it doesn't exist
+
+```python
+import os
+
+output_folder = "output_audio"
+os.makedirs(output_folder, exist_ok=True)
+```
+
+Next we want to take the translated words stored in our Dictionary, and generate audio files for each of them using gTTS (Google Text-To-Speech):
+```python
+for original, translated in tranlations.items():
+    tts = gTTS(original, lang=language)
+    filename = os.path.join(output_folder, original.replace(" ", "_") + ".mp3")
+    tts.save(filename)
+    print(f"\nAudio file: {translated}.mp3 → Created successfully!")
+```
+
+
+
+Output:
+```
+Translations:
+Guten tag →  Good day
+Wie geht es dir →  How are you doing?
+Mir geht es gut →  I'm doing well
+auf wiedersehen →  Goodbye
+
+Audio file: Good day.mp3 → Created successfully!
+
+Audio file: How are you doing?.mp3 → Created successfully!
+
+Audio file: I'm doing well.mp3 → Created successfully!
+
+Audio file: Goodbye.mp3 → Created successfully!
+```
